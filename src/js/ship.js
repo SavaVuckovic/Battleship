@@ -1,25 +1,20 @@
-export default (length) => {
-  // ship positions
-  const positions = [];
+export default class Ship {
 
-  // populate positions
-  for (let i = 0; i < length; i++) {
-    positions.push('O');
+  constructor(coordinates) {
+    // populate ship positions
+    this.positions = {};
+    coordinates.forEach(c => {
+      this.positions[c] = 'O';
+    });
   }
 
   // change position from safe (O) to hit (X)
-  const hit = (index) => {
-    positions[index] = 'X';
-  };
-
-  // check if ship is sunk (all positions are hit)
-  const isSunk = () => {
-    return positions.every((position) => position === 'X');
+  hit(coordinates) {
+    this.positions[coordinates] = 'X';
   }
 
-  return {
-    positions,
-    hit,
-    isSunk
-  };
-};
+  // check if all positions are hit
+  isSunk() {
+    return Object.values(this.positions).every(pos => pos === 'O');
+  }
+}
