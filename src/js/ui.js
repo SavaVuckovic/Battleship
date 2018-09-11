@@ -1,19 +1,26 @@
+import { nameIsValid } from './helpers';
+import { rejects } from 'assert';
+
 // opens a modal allowing player to select his name
 export function selectPlayerName() {
   const modal = document.querySelector('#player-name-modal');
   const form = document.querySelector('#player-name-form'); 
   // show the player name modal
   toggleModal(modal);
-
-  return new Promise(resolve => {
+  
+  return new Promise((resolve, reject) => {
     form.addEventListener('submit', e => {
       e.preventDefault();
       // extract player name value
       const playerName = e.target.elements['player-name'].value;
-      // hide the modal
-      toggleModal(modal);
-
-      resolve(playerName);
+      // validate the name
+      const msg = nameIsValid(playerName);
+      if (msg === 'Valid') {
+        resolve(playerName);
+        toggleModal(modal);
+      } else {
+        reject(msg);
+      }
     });
   });
 };
@@ -45,17 +52,24 @@ function generateBoard(player, slots) {
   // fill it with proper information
   newBoard.querySelector('.player').innerText = player.name;
   // generate slots
-  populateBoardWithSlots(newBoard.querySelector('.board'), slots);
-  // add event listeners to enemy (computer) board
-  // ...
+  
+  if (player.human) {
+    populateBoardWithSlots(newBoard.querySelector('.board'), slots, true);
+  } else {
+    populateBoardWithSlots(newBoard.querySelector('.board'), slots);
+  }
 
   return newBoard;
 }
 
-function populateBoardWithSlots(board, slots) {
+function populateBoardWithSlots(board, slots, human = false) {
   slots.forEach(slot => {
     const slotDiv = document.createElement('div');
     slotDiv.classList.add('slot');
+    if (!human) {
+      slotDiv.classList.add('enemy');
+      slotDiv.addEventListener('click', e => console.log(slot));
+    }
     slotDiv.dataset.coordinates = slot;
     board.appendChild(slotDiv);
   });

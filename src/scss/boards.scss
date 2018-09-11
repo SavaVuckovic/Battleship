@@ -1,6 +1,5 @@
 .boards {
-  border: 1px solid black;
-  margin: 70px auto;
+  margin: 60px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +15,15 @@
       .slot {
         width: 50px;
         height: 50px;
-        background: grey;
-        border: 1px solid white;
-        &:hover {
-          background: whitesmoke;
+        background: $grey-lighter;
+        border: 1px solid $white;
+        &.enemy {
+          &:hover {
+            background: $orange;
+          }
+        }
+        &.ship {
+          background: $grey;
         }
       }
     }
