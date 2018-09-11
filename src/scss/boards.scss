@@ -1,0 +1,37 @@
+.boards {
+  border: 1px solid black;
+  margin: 20vh auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .board-wrapper {
+    .player {
+      text-align: center;
+    }
+    .board {
+      width: 500px;
+      height: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      .slot {
+        width: 50px;
+        height: 50px;
+        background: grey;
+        border: 1px solid white;
+        &:hover {
+          background: whitesmoke;
+        }
+      }
+    }
+  }
+  .board-separator {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      font-size: 32px;
+      text-transform: uppercase;
+    }
+  }
+}
