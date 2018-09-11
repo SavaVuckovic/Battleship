@@ -24,6 +24,11 @@ export default class Gameboard {
       // shot is missed
   }
 
+  // check if ship exists in given position
+  foundShip(coordinates) {
+
+  }
+
   allShipsSunk() {
     // return true if all ships are sunk and false otherwise
   }

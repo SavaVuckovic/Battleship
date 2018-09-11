@@ -4,13 +4,17 @@ import Gameboard from './gameboard';
 import Player from './player';
 import { createBoards, selectPlayerName } from './ui';
 
-selectPlayerName()
-  .then(playerName => {
-    const human = new Player(playerName);
-    const computer = new Player('Computer', false);
-    const humanBoard = new Gameboard();
-    const computerBoard = new Gameboard();
+// when document loads
+document.addEventListener("DOMContentLoaded", () => {
+  selectPlayerName() // only after player inputs a valid name
+    .then(playerName => {
+      // initialize game objects
+      const human = new Player(playerName);
+      const computer = new Player('Computer', false);
+      const humanBoard = new Gameboard();
+      const computerBoard = new Gameboard();
 
-    createBoards(human, humanBoard, computer, computerBoard);
-  })
-  .catch(err => alert(err));
+      // create boards in the UI
+      createBoards(human, humanBoard, computer, computerBoard);
+    });
+});

@@ -1,3 +1,4 @@
+// validates player name
 export function nameIsValid (name){
   if (name.length === 0) {
     return 'Name cannot be empty';
