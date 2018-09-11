@@ -1,20 +1,30 @@
 export default class Gameboard {
 
-  constructor() {
+  constructor() {    
+    this.slots = {};
+    this.ships = [];
+
     // generate board slots
-    this.slots = [];
-    const abcd = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    abcd.forEach(letter => {
+    const abcd = 'ABCDEFGHIJ';
+    abcd.split('').forEach(letter => {
       for (var i = 1; i <= 10; i++) {
-        this.slots.push(`${letter}${i}`);
+        this.slots[`${letter}${i}`] = 'empty';
       }
     });
 
-    console.log(this.slots);
+    // generate ships (place them randomly)
+    // ....
   }
 
   // receive an attack from enemy
   receiveAttack(coordinates) {
-    console.log('wait');
+    // if ship is there
+      // call hit method on that ship
+    // else
+      // shot is missed
+  }
+
+  allShipsSunk() {
+    // return true if all ships are sunk and false otherwise
   }
 };
