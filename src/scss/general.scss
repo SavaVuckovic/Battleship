@@ -17,3 +17,17 @@ body {
 .template {
   display: none;
 }
+
+.btn {
+  width: 200px;
+  margin: 12px 4px 0;
+  padding: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  background: #fff;
+  border: 2px solid black;
+  &:hover {
+    background: black;
+    color: white;
+  }
+}

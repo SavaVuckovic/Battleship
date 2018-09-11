@@ -1,15 +1,14 @@
 import '../scss/index.scss';
 import '../index.html';
-
 import Gameboard from './gameboard';
 import { Player, ComputerPlayer } from './players';
+import { createBoards, selectPlayerName } from './ui';
 
-import { createBoards } from './ui';
+selectPlayerName().then(playerName => {
+  const human = new Player(playerName);
+  const computer = new ComputerPlayer('computer');
+  const humanBoard = new Gameboard();
+  const computerBoard = new Gameboard();
 
-const human = new Player('Sava');
-const computer = new ComputerPlayer('computer');
-
-const humanBoard = new Gameboard();
-const computerBoard = new Gameboard();
-
-createBoards(human, humanBoard, computer, computerBoard);
+  createBoards(human, humanBoard, computer, computerBoard);
+});

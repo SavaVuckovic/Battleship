@@ -1,3 +1,31 @@
+// opens a modal allowing player to select his name
+export function selectPlayerName() {
+  const modal = document.querySelector('#player-name-modal');
+  const form = document.querySelector('#player-name-form'); 
+  // show the player name modal
+  toggleModal(modal);
+
+  return new Promise(resolve => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // extract player name value
+      const playerName = e.target.elements['player-name'].value;
+      // hide the modal
+      toggleModal(modal);
+
+      resolve(playerName);
+    });
+  });
+};
+
+function toggleModal(modal) {
+  if (modal.style.display !== 'block') {
+    modal.style.display = 'block';
+  } else {
+    modal.style.display = 'none';
+  }
+}
+
 export function createBoards(human, humanGameboard, computer, computerGameboard) {
   const boardsContainer = document.querySelector('.boards');
 

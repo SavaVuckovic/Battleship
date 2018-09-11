@@ -22,6 +22,21 @@
     </div>
   </div>
 
+  <!-- Player Name Modal -->
+  <div class="modal" id="player-name-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Please enter your name</h2>
+      </div>
+      <div class="modal-body">
+        <form id="player-name-form">
+          <input type="text" name="player-name" placeholder="Your Name Here">
+          <button class="btn" type="submit">Play</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Game Over Modal -->
   <div class="modal" id="game-over-modal">
     <div class="modal-content">
@@ -31,8 +46,8 @@
       <div class="modal-body">
         <h2 class="message">Someone has won</h2>
         <div class="buttons-wrapper">
-          <button id="play-again">Play Again</button>
-          <button id="refresh">Select New Players</button>
+          <button class="btn" id="play-again">Play Again</button>
+          <button class="btn" id="refresh">Select New Players</button>
         </div>
       </div>
     </div>
