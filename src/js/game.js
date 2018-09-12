@@ -12,6 +12,10 @@ export default function startGame(playerName) {
   const humanBoard = new Gameboard();
   const computerBoard = new Gameboard();
 
+  // generate board slots & ships
+  humanBoard.setup();
+  computerBoard.setup();
+
   // initialize boards in the UI
   initializeBoards(human, humanBoard, computer, computerBoard);
   addSlotListeners(playTurn);

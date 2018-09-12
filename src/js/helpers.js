@@ -8,3 +8,16 @@ export function nameIsValid (name){
     return 'Valid';
   }
 }
+
+// generates random board position
+export function randomPosition() {
+  const abcd = 'ABCDEFGHIJ';
+  const x = abcd[Math.floor(Math.random() * abcd.length)];
+  const y = Math.floor(Math.random() * 10) + 1;
+  return `${x}${y}`;
+}
+
+// generates random direction
+export function randomDirection() {
+  return Math.random() > 0.5 ? 'vertical' : 'horizontal';
+}

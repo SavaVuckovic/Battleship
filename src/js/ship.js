@@ -1,10 +1,11 @@
 export default class Ship {
 
-  constructor(coordinates) {
+  constructor(name, positions) {
     // populate ship positions
+    this.name = name;
     this.positions = {};
-    coordinates.forEach(c => {
-      this.positions[c] = 'O';
+    positions.forEach(pos => {
+      this.positions[pos] = 'O';
     });
   }
 
