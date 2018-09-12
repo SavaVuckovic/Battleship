@@ -25,7 +25,7 @@ export function selectPlayerName() {
 };
 
 // creates boards in the UI
-export function createBoards(human, humanGameboard, computer, computerGameboard) {
+export function initializeBoards(human, humanGameboard, computer, computerGameboard) {
   const boardsContainer = document.querySelector('.boards');
   const humanBoard = generateBoard(human, Object.keys(humanGameboard.slots));
   const separator = generateBoardSeparator();
@@ -34,6 +34,14 @@ export function createBoards(human, humanGameboard, computer, computerGameboard)
   boardsContainer.appendChild(humanBoard);
   boardsContainer.appendChild(separator);
   boardsContainer.appendChild(computerBoard);
+}
+
+// add slot click listeners
+export function addSlotListeners(callback) {
+  const slots = document.querySelectorAll('#computer-board .slot');
+  slots.forEach(slot => {
+    slot.addEventListener('click', () => callback(slot.dataset.coordinates));
+  });
 }
 
 // show/hide modal
@@ -53,10 +61,13 @@ function generateBoard(player, slots) {
   // fill it with proper information
   newBoard.querySelector('.player').innerText = player.name;
   // generate board slots
+  const board = newBoard.querySelector('.board');
   if (player.human) {
-    populateBoardWithSlots(newBoard.querySelector('.board'), slots);
+    board.id = 'human-board';
+    populateBoardWithSlots(board, slots);
   } else {
-    populateBoardWithSlots(newBoard.querySelector('.board'), slots, false);
+    board.id = 'computer-board';
+    populateBoardWithSlots(board, slots, false);
   }
 
   return newBoard;
@@ -69,7 +80,6 @@ function populateBoardWithSlots(board, slots, human = true) {
     slotDiv.classList.add('slot');
     if (!human) {
       slotDiv.classList.add('enemy');
-      slotDiv.addEventListener('click', e => console.log(slot)); // change later
     }
     slotDiv.dataset.coordinates = slot;
     board.appendChild(slotDiv);
