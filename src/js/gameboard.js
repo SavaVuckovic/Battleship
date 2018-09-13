@@ -1,5 +1,8 @@
 import Ship from './ship';
-import { randomPosition, randomDirection } from './helpers';
+import { 
+  randomPosition,
+  randomPositions
+} from './helpers';
 
 export default class Gameboard {
 
@@ -35,43 +38,32 @@ export default class Gameboard {
     ];
 
     shipsToGenerate.forEach(ship => {
-      const startPos = randomPosition();
-      const direction = randomDirection();
-      let positions = [startPos];
+      let startPos = randomPosition();
+      let positions = randomPositions(startPos, ship[1]);
+      
+      // make sure that no ship already exists at that location
+      let stop = false;
 
-      // generate other ship positions based on direction
-      if (direction === 'vertical') {
-        const startY = Number(startPos[1]);
-        if (startY <= 6) {
-          for (var i = startY + 1; i < (startY + ship[1]); i++) {
-            positions.push(`${startPos[0]}${i}`);
+      while (!stop) {
+        let found = false;
+        positions.forEach(pos => {
+          if (this.foundShip(pos)) {
+            found = true;
+            startPos = randomPosition();
+            positions = randomPositions(startPos, ship[1]);
           }
-        } else {
-          for (var i = startY - 1; i > (startY - ship[1]); i--) {
-            positions.push(`${startPos[0]}${i}`);
-          }
-        }
-      } else {
-        const startX = startPos[0];
-        if (startX.charCodeAt() <= 'F'.charCodeAt()) {
-          for (var i = 1; i < ship[1]; i++) {
-            const x = String.fromCharCode(startX.charCodeAt() + i);
-            positions.push(`${x}${startPos[1]}`);
-          }
-        } else {
-          for (var i = 1; i < ship[1]; i++) {
-            const x = String.fromCharCode(startX.charCodeAt() - i);
-            positions.push(`${x}${startPos[1]}`);
-          }
-        }
-      }
+        });
 
+        if (!found) {
+          stop = true;
+        }
+      };
+      
+      // instantiate new ship object with generated positions
       const newShip = new Ship(ship[0], positions);
-      console.log(newShip);
-
-      // validations
-      // ...
-
+      // change board slots that ship occupies
+      positions.forEach(pos => this.slots[pos] = newShip.name);
+      // add to board ships
       this.ships.push(newShip);
     });
   }
@@ -86,7 +78,16 @@ export default class Gameboard {
 
   // check if ship exists in given position
   foundShip(coordinates) {
+    let found = false;
+    this.ships.forEach(ship => {
+      Object.keys(ship.positions).forEach(pos => {
+        if (pos === coordinates) {
+          found = true;
+        }
+      });
+    });
 
+    return found;
   }
 
   allShipsSunk() {

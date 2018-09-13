@@ -27,9 +27,9 @@ export function selectPlayerName() {
 // creates boards in the UI
 export function initializeBoards(human, humanGameboard, computer, computerGameboard) {
   const boardsContainer = document.querySelector('.boards');
-  const humanBoard = generateBoard(human, Object.keys(humanGameboard.slots));
+  const humanBoard = generateBoard(human, humanGameboard.slots);
   const separator = generateBoardSeparator();
-  const computerBoard = generateBoard(computer, Object.keys(computerGameboard.slots));
+  const computerBoard = generateBoard(computer, computerGameboard.slots);
 
   boardsContainer.appendChild(humanBoard);
   boardsContainer.appendChild(separator);
@@ -75,13 +75,21 @@ function generateBoard(player, slots) {
 
 // populates a board with slot divs
 function populateBoardWithSlots(board, slots, human = true) {
-  slots.forEach(slot => {
+  Object.keys(slots).forEach(slot => {
     const slotDiv = document.createElement('div');
     slotDiv.classList.add('slot');
     if (!human) {
       slotDiv.classList.add('enemy');
+    } 
+    // else if (slots[slot] !== 'empty') {
+    //   slotDiv.classList.add('ship');
+    // }
+    if (slots[slot] !== 'empty') {
+      slotDiv.classList.add('ship');
     }
     slotDiv.dataset.coordinates = slot;
+    // debug
+    slotDiv.innerText = slot;
     board.appendChild(slotDiv);
   });
 }
