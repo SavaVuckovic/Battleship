@@ -72,20 +72,25 @@ export default class Gameboard {
   receiveAttack(coordinates) {
     const ship = this.foundShip(coordinates);
     if (ship) {
+      // if ship exists
       ship.hit(coordinates);
       if (ship.isSunk()) {
         const positions = Object.keys(ship.positions);
         positions.forEach(pos => this.updateBoardSlot(pos, 'sunk'));
         if (this.allShipsSunk()) {
+          // all ships are destroyed
           return 'game over';
         } else {
-          return 'sunk';
+          // ship is sunk, return its positions so that UI can be updated inside playTurn()
+          return Object.keys(ship.positions);
         }
       } else {
+        // ship is hit but not destroyed
         this.updateBoardSlot(coordinates, 'hit');
         return 'hit';
       }
     } else {
+      // ship doesn't exist at a given location
       this.updateBoardSlot(coordinates, 'miss');
       return 'miss';
     }

@@ -4,6 +4,7 @@ import {
   initializeBoards,
   addSlotListeners,
   hitSlot,
+  sinkShip,
   deactivateSlot,
   showGameOver
  } from './ui';
@@ -31,24 +32,17 @@ export default function startGame(playerName) {
 
 function playTurn(humanMove) {
   const humanMoveResult = computerBoard.receiveAttack(humanMove);
-  console.log(humanMoveResult);
-  switch (humanMoveResult) {
-    case 'hit':
-      // hit the ship in the UI
-      hitSlot('computer', humanMove);
-      break;
-    case 'sunk':
-      // if all ships are sunk, show game over
-      // ...
-      break;
-    case 'miss':
-      // deactivate the slot in the UI
-      deactivateSlot('computer', humanMove);
-      // computers turn to play
-      // ...
-      break;
-    case 'game over':
-      // show game over modal
-      showGameOver('Congratulations, you have won the game!', () => startGame(human.name));
+
+  if (humanMoveResult === 'hit') {
+    hitSlot('computer', humanMove);
+  } else if (humanMoveResult === 'miss') {
+    deactivateSlot('computer', humanMove);
+    // computers turn to play
+    // ...
+  } else if (humanMoveResult === 'game over') {
+    showGameOver('Congratulations, you have won the game!', () => startGame(human.name));
+  } else {
+    // ship is sunk, its positions are returned inside humanMoveResult
+    sinkShip('computer', humanMoveResult);
   }
 }
