@@ -49,5 +49,5 @@ export function randomPositions(startPos, shipLength) {
     }
   }
 
-  return positions
+  return positions;
 }

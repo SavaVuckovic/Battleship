@@ -1,7 +1,6 @@
 export default class Ship {
 
   constructor(name, positions) {
-    // populate ship positions
     this.name = name;
     this.positions = {};
     positions.forEach(pos => {
@@ -16,6 +15,6 @@ export default class Ship {
 
   // check if all positions are hit
   isSunk() {
-    return Object.values(this.positions).every(pos => pos === 'O');
+    return Object.values(this.positions).every(pos => pos === 'X');
   }
 }

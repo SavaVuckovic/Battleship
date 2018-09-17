@@ -2,7 +2,8 @@ import Player from './player';
 import Gameboard from './gameboard';
 import { 
   initializeBoards,
-  addSlotListeners
+  addSlotListeners,
+  deactivateSlot
  } from './ui';
 
 export default function startGame(playerName) {
@@ -21,6 +22,7 @@ export default function startGame(playerName) {
   addSlotListeners(playTurn);
 }
 
-function playTurn(humanPlayerMove) {
-  console.log(humanPlayerMove);
+function playTurn(humanMove) {
+  deactivateSlot('computer', humanMove);
+  console.log('clicked');
 }

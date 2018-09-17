@@ -44,6 +44,15 @@ export function addSlotListeners(callback) {
   });
 }
 
+// deactivate a slot in the UI by replacing it with unactve slot
+export function deactivateSlot(player, coordinates) {
+  const board = document.querySelector(`#${player}-board`);
+  const slot = board.querySelector(`[data-coordinates='${coordinates}']`);
+  const unactive = document.createElement('div');
+  unactive.classList.add('unactive-slot');
+  board.replaceChild(unactive, slot);
+}
+
 // show/hide modal
 function toggleModal(modal) {
   if (modal.style.display !== 'block') {

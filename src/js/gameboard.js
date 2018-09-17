@@ -90,7 +90,8 @@ export default class Gameboard {
     return found;
   }
 
+  // checks if all ships are sunk
   allShipsSunk() {
-    // return true if all ships are sunk and false otherwise
+    return this.ships.every(ship => ship.isSunk());
   }
 };
