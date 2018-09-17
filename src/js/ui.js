@@ -31,6 +31,7 @@ export function initializeBoards(human, humanGameboard, computer, computerGamebo
   const separator = generateBoardSeparator();
   const computerBoard = generateBoard(computer, computerGameboard.slots);
 
+  boardsContainer.innerHTML = '';
   boardsContainer.appendChild(humanBoard);
   boardsContainer.appendChild(separator);
   boardsContainer.appendChild(computerBoard);
@@ -47,13 +48,21 @@ export function addSlotListeners(callback) {
 // hit a slot in the UI
 export function hitSlot(player, coordinates) {
   const slot = findSlot(player, coordinates);
+  if (slot.classList.contains('enemy')) {
+    slot.classList.remove('enemy');
+  }
   slot.classList.add('hit');
 }
 
 // sink a ship in the UI
 export function sinkShip(player, positions) {
   const slots = positions.map(coord => findSlot(player, coord));
-  slots.forEach(slot => slot.classList.add('destroyed'));
+  slots.forEach(slot => {
+    if (slot.classList.contains('enemy')) {
+      slot.classList.remove('enemy');
+    }
+    slot.classList.add('destroyed');
+  });
 }
 
 // deactivate a slot in the UI by replacing it with unactve slot
@@ -64,6 +73,26 @@ export function deactivateSlot(player, coordinates) {
   unactive.classList.add('unactive-slot');
   board.replaceChild(unactive, slot);
 }
+
+// displays a game over modal with a proper message
+export function showGameOver(msg, callback) {
+  const modal = document.querySelector('#game-over-modal');
+  const message = modal.querySelector('.message');
+  const playAgainBtn = document.querySelector('#play-again');
+  const refreshBtn = document.querySelector('#refresh');
+
+  modal.style.display = 'block';
+  message.innerHTML = msg;
+
+  playAgainBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    callback();
+  });
+
+  refreshBtn.addEventListener('click', () => {
+    document.location.reload();
+  });
+};
 
 // given a board player and coordinates, find a ship
 function findSlot(player, coordinates) {

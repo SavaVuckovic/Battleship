@@ -76,7 +76,11 @@ export default class Gameboard {
       if (ship.isSunk()) {
         const positions = Object.keys(ship.positions);
         positions.forEach(pos => this.updateBoardSlot(pos, 'sunk'));
-        return 'sunk';
+        if (this.allShipsSunk()) {
+          return 'game over';
+        } else {
+          return 'sunk';
+        }
       } else {
         this.updateBoardSlot(coordinates, 'hit');
         return 'hit';

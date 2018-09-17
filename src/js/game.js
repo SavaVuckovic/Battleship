@@ -4,7 +4,8 @@ import {
   initializeBoards,
   addSlotListeners,
   hitSlot,
-  deactivateSlot
+  deactivateSlot,
+  showGameOver
  } from './ui';
 
 let human;
@@ -30,6 +31,7 @@ export default function startGame(playerName) {
 
 function playTurn(humanMove) {
   const humanMoveResult = computerBoard.receiveAttack(humanMove);
+  console.log(humanMoveResult);
   switch (humanMoveResult) {
     case 'hit':
       // hit the ship in the UI
@@ -44,5 +46,9 @@ function playTurn(humanMove) {
       deactivateSlot('computer', humanMove);
       // computers turn to play
       // ...
+      break;
+    case 'game over':
+      // show game over modal
+      showGameOver('Congratulations, you have won the game!', () => startGame(human.name));
   }
 }
