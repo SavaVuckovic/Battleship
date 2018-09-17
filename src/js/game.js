@@ -32,17 +32,34 @@ export default function startGame(playerName) {
 
 function playTurn(humanMove) {
   const humanMoveResult = computerBoard.receiveAttack(humanMove);
-
   if (humanMoveResult === 'hit') {
     hitSlot('computer', humanMove);
   } else if (humanMoveResult === 'miss') {
     deactivateSlot('computer', humanMove);
     // computers turn to play
-    // ...
+    computerTurn();
   } else if (humanMoveResult === 'game over') {
-    showGameOver('Congratulations, you have won the game!', () => startGame(human.name));
+    showGameOver('Victory, you have destroyed all of enemy ships!', () => startGame(human.name));
   } else {
     // ship is sunk, its positions are returned inside humanMoveResult
     sinkShip('computer', humanMoveResult);
   }
+}
+
+function computerTurn() {
+  setTimeout(() => {
+    const computerMove = computer.attack()
+    const computerMoveResult = humanBoard.receiveAttack(computerMove);
+
+    if (computerMoveResult === 'hit') {
+      hitSlot('human', computerMove);
+      computerTurn();
+    } else if (computerMoveResult === 'miss') {
+      deactivateSlot('human', computerMove);
+    } else if (computerMoveResult === 'game over') {
+      showGameOver('Defeat, enemy has destroyed all of your ships!', () => startGame(human.name));
+    } else {
+      sinkShip('human', computerMoveResult);
+    }
+  }, 400);
 }
