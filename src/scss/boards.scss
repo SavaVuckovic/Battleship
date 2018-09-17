@@ -25,6 +25,12 @@
         &.ship {
           background: $grey;
         }
+        &.hit {
+          background: $red;
+        }
+        &.destroyed {
+          background: $red-dark;
+        }
       }
       .unactive-slot {
         width: 50px;

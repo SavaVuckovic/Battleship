@@ -61,8 +61,8 @@ export default class Gameboard {
       
       // instantiate new ship object with generated positions
       const newShip = new Ship(ship[0], positions);
-      // change board slots that ship occupies
-      positions.forEach(pos => this.slots[pos] = newShip.name);
+      // update board slots that ship occupies
+      positions.forEach(pos => this.updateBoardSlot(pos, newShip.name));
       // add to board ships
       this.ships.push(newShip);
     });
@@ -70,24 +70,40 @@ export default class Gameboard {
 
   // receive an attack from enemy
   receiveAttack(coordinates) {
-    // if ship is there
-      // call hit method on that ship
-    // else
-      // shot is missed
+    const ship = this.foundShip(coordinates);
+    if (ship) {
+      ship.hit(coordinates);
+      if (ship.isSunk()) {
+        const positions = Object.keys(ship.positions);
+        positions.forEach(pos => this.updateBoardSlot(pos, 'sunk'));
+        return 'sunk';
+      } else {
+        this.updateBoardSlot(coordinates, 'hit');
+        return 'hit';
+      }
+    } else {
+      this.updateBoardSlot(coordinates, 'miss');
+      return 'miss';
+    }
   }
 
-  // check if ship exists in given position
+  // return ship if it exists in given position, and false otherwise
   foundShip(coordinates) {
     let found = false;
     this.ships.forEach(ship => {
       Object.keys(ship.positions).forEach(pos => {
         if (pos === coordinates) {
-          found = true;
+          found = ship;
         }
       });
     });
 
     return found;
+  }
+
+  // updates a value of a single board slot
+  updateBoardSlot(coordinates, value) {
+    this.slots[coordinates] = value;
   }
 
   // checks if all ships are sunk

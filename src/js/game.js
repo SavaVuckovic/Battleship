@@ -3,15 +3,21 @@ import Gameboard from './gameboard';
 import { 
   initializeBoards,
   addSlotListeners,
+  hitSlot,
   deactivateSlot
  } from './ui';
 
+let human;
+let computer;
+let humanBoard;
+let computerBoard;
+
 export default function startGame(playerName) {
   // initialize game objects
-  const human = new Player(playerName);
-  const computer = new Player('Computer', false);
-  const humanBoard = new Gameboard();
-  const computerBoard = new Gameboard();
+  human = new Player(playerName);
+  computer = new Player('Computer', false);
+  humanBoard = new Gameboard();
+  computerBoard = new Gameboard();
 
   // generate board slots & ships
   humanBoard.setup();
@@ -23,6 +29,20 @@ export default function startGame(playerName) {
 }
 
 function playTurn(humanMove) {
-  deactivateSlot('computer', humanMove);
-  console.log('clicked');
+  const humanMoveResult = computerBoard.receiveAttack(humanMove);
+  switch (humanMoveResult) {
+    case 'hit':
+      // hit the ship in the UI
+      hitSlot('computer', humanMove);
+      break;
+    case 'sunk':
+      // if all ships are sunk, show game over
+      // ...
+      break;
+    case 'miss':
+      // deactivate the slot in the UI
+      deactivateSlot('computer', humanMove);
+      // computers turn to play
+      // ...
+  }
 }

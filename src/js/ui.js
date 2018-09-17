@@ -44,6 +44,18 @@ export function addSlotListeners(callback) {
   });
 }
 
+// hit a slot in the UI
+export function hitSlot(player, coordinates) {
+  const slot = findSlot(player, coordinates);
+  slot.classList.add('hit');
+}
+
+// sink a ship in the UI
+export function sinkShip(player, positions) {
+  const slots = positions.map(coord => findSlot(player, coord));
+  slots.forEach(slot => slot.classList.add('destroyed'));
+}
+
 // deactivate a slot in the UI by replacing it with unactve slot
 export function deactivateSlot(player, coordinates) {
   const board = document.querySelector(`#${player}-board`);
@@ -51,6 +63,13 @@ export function deactivateSlot(player, coordinates) {
   const unactive = document.createElement('div');
   unactive.classList.add('unactive-slot');
   board.replaceChild(unactive, slot);
+}
+
+// given a board player and coordinates, find a ship
+function findSlot(player, coordinates) {
+  const board = document.querySelector(`#${player}-board`);
+  const slot = board.querySelector(`[data-coordinates='${coordinates}']`);
+  return slot;
 }
 
 // show/hide modal
