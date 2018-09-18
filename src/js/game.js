@@ -54,6 +54,8 @@ function computerTurn() {
     if (computerMoveResult === 'hit') {
       hitSlot('human', computerMove);
       computerTurn();
+    } else if (computerMoveResult === 'already played') {
+      computerTurn();
     } else if (computerMoveResult === 'miss') {
       deactivateSlot('human', computerMove);
     } else if (computerMoveResult === 'game over') {
@@ -61,5 +63,5 @@ function computerTurn() {
     } else {
       sinkShip('human', computerMoveResult);
     }
-  }, 400);
+  }, 300);
 }
