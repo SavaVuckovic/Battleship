@@ -1,5 +1,5 @@
-import Player from './player';
 import Gameboard from './gameboard';
+import { Player, ComputerPlayer } from './player';
 import { 
   initializeBoards,
   addSlotListeners,
@@ -17,7 +17,7 @@ let computerBoard;
 export default function startGame(playerName) {
   // initialize game objects
   human = new Player(playerName);
-  computer = new Player('Computer', false);
+  computer = new ComputerPlayer();
   humanBoard = new Gameboard();
   computerBoard = new Gameboard();
 
@@ -53,6 +53,7 @@ function computerTurn() {
 
     if (computerMoveResult === 'hit') {
       hitSlot('human', computerMove);
+      computer.smartGuessMode(computerMove);
       computerTurn();
     } else if (computerMoveResult === 'already played') {
       computerTurn();
