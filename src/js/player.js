@@ -10,6 +10,7 @@ export class Player {
 export class ComputerPlayer extends Player {
   constructor() {
     super('Computer', false);
+    // additional variables relevant only for computer player
     this.smart = false;
     this.lastHit = false;
     this.directionToAttack = 'vertical';

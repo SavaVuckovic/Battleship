@@ -3,7 +3,7 @@ import { nameIsValid } from './helpers';
 // opens a modal allowing player to select his name
 export function selectPlayerName() {
   const modal = document.querySelector('#player-name-modal');
-  const form = document.querySelector('#player-name-form'); 
+  const form = modal.querySelector('#player-name-form'); 
   // show the player name modal
   toggleModal(modal);
   
@@ -15,6 +15,7 @@ export function selectPlayerName() {
       // validate the name
       const msg = nameIsValid(playerName);
       if (msg === 'Valid') {
+        // start the game only if name is valid
         resolve(playerName);
         toggleModal(modal);
       } else {

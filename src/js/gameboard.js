@@ -1,7 +1,7 @@
 import Ship from './ship';
 import { 
   randomPosition,
-  randomPositions
+  randomShipPositions
 } from './helpers';
 
 export default class Gameboard {
@@ -11,7 +11,7 @@ export default class Gameboard {
     this.ships = [];
   }
 
-  // generates the board and places ships
+  // generates the slots and places ships
   setup() {
     this.generateSlots();
     this.placeShips();
@@ -19,8 +19,7 @@ export default class Gameboard {
 
   // generates board slot grid
   generateSlots() {
-    const abcd = 'ABCDEFGHIJ';
-    abcd.split('').forEach(letter => {
+    'ABCDEFGHIJ'.split('').forEach(letter => {
       for (var i = 1; i <= 10; i++) {
         this.slots[`${letter}${i}`] = 'empty';
       }
@@ -39,7 +38,7 @@ export default class Gameboard {
 
     shipsToGenerate.forEach(ship => {
       let startPos = randomPosition();
-      let positions = randomPositions(startPos, ship[1]);
+      let positions = randomShipPositions(startPos, ship[1]);
       
       // make sure that no ship already exists at that location
       let stop = false;
@@ -50,7 +49,7 @@ export default class Gameboard {
           if (this.foundShip(pos)) {
             found = true;
             startPos = randomPosition();
-            positions = randomPositions(startPos, ship[1]);
+            positions = randomShipPositions(startPos, ship[1]);
           }
         });
 
