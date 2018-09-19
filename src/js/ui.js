@@ -26,11 +26,11 @@ export function selectPlayerName() {
 };
 
 // creates boards in the UI
-export function initializeBoards(human, humanGameboard, computer, computerGameboard) {
+export function initializeBoards(human, humanSlots, computer, computerSlots) {
   const boardsContainer = document.querySelector('.boards');
-  const humanBoard = generateBoard(human, humanGameboard.slots);
+  const humanBoard = generateBoard(human, humanSlots);
   const separator = generateBoardSeparator();
-  const computerBoard = generateBoard(computer, computerGameboard.slots);
+  const computerBoard = generateBoard(computer, computerSlots);
 
   boardsContainer.innerHTML = '';
   boardsContainer.appendChild(humanBoard);
@@ -79,19 +79,16 @@ export function deactivateSlot(player, coordinates) {
 export function showGameOver(msg, callback) {
   const modal = document.querySelector('#game-over-modal');
   const message = modal.querySelector('.message');
-  const playAgainBtn = document.querySelector('#play-again');
-  const refreshBtn = document.querySelector('#refresh');
+  const playAgainBtn = modal.querySelector('#play-again');
+  const refreshBtn = modal.querySelector('#refresh');
 
-  modal.style.display = 'block';
+  toggleModal(modal);
+
   message.innerHTML = msg;
-
+  refreshBtn.addEventListener('click', () => document.location.reload());
   playAgainBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
+    toggleModal(modal);
     callback();
-  });
-
-  refreshBtn.addEventListener('click', () => {
-    document.location.reload();
   });
 };
 
@@ -146,18 +143,14 @@ function populateBoardWithSlots(board, slots, human = true) {
   Object.keys(slots).forEach(slot => {
     const slotDiv = document.createElement('div');
     slotDiv.classList.add('slot');
+
     if (!human) {
       slotDiv.classList.add('enemy');
-    } 
-    // else if (slots[slot] !== 'empty') {
-    //   slotDiv.classList.add('ship');
-    // }
-    if (slots[slot] !== 'empty') {
+    } else if (slots[slot] !== 'empty') {
       slotDiv.classList.add('ship');
     }
+
     slotDiv.dataset.coordinates = slot;
-    // debug
-    slotDiv.innerText = slot;
     board.appendChild(slotDiv);
   });
 }

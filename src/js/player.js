@@ -23,33 +23,19 @@ export class ComputerPlayer extends Player {
 
   // decide which slot to attack
   attack() {
-    let guess;
-    if (this.smart) {
-      let stop = false;
-      while(!stop) {
-        guess = this.smartGuess();
-        if (this.alreadyPlayedSlots.indexOf(guess) === -1) {
-          this.alreadyPlayedSlots.push(guess);
-          stop = true;
-          return guess;
-        }
-      }
-    } else {
-      let stop = false;
-      while(!stop) {
-        guess = randomPosition();
-        if (this.alreadyPlayedSlots.indexOf(guess) === -1) {
-          this.alreadyPlayedSlots.push(guess);
-          stop = true;
-          return guess;
-        }
+    let stop = false;
+    while(!stop) {
+      const guess = this.smart ? this.smartGuess() : randomPosition();
+      if (this.alreadyPlayedSlots.indexOf(guess) === -1) {
+        this.alreadyPlayedSlots.push(guess);
+        stop = true;
+        return guess;
       }
     }
   }
 
   // make a smart guess
   smartGuess() {
-    console.log(this.possibleSlots);
     if (this.possibleSlots[this.directionToAttack].length > 0) {
       return this.possibleSlots[this.directionToAttack].pop();
     } else {

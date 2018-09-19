@@ -9,6 +9,7 @@ export default class Gameboard {
   constructor() {    
     this.slots = {};
     this.ships = [];
+    this.lastSunkShipInfo = {};
   }
 
   // generates the slots and places ships
@@ -74,17 +75,13 @@ export default class Gameboard {
       // if ship exists
       ship.hit(coordinates);
       if (ship.isSunk()) {
+        // when ship is destroyed
         const positions = Object.keys(ship.positions);
         positions.forEach(pos => this.updateBoardSlot(pos, 'sunk'));
-        if (this.allShipsSunk()) {
-          // all ships are destroyed
-          return 'game over';
-        } else {
-          // ship is sunk, return its positions so that UI can be updated inside playTurn()
-          return Object.keys(ship.positions);
-        }
+        this.updateLastSunkShip(ship.name, Object.keys(ship.positions));
+        return 'sunk';
       } else {
-        // ship is hit but not destroyed
+        // when ship is hit but not destroyed
         this.updateBoardSlot(coordinates, 'hit');
         return 'hit';
       }
@@ -98,11 +95,10 @@ export default class Gameboard {
   // return ship if it exists in given position, and false otherwise
   foundShip(coordinates) {
     let found = false;
+
     this.ships.forEach(ship => {
       Object.keys(ship.positions).forEach(pos => {
-        if (pos === coordinates) {
-          found = ship;
-        }
+        if (pos === coordinates) found = ship;
       });
     });
 
@@ -117,5 +113,16 @@ export default class Gameboard {
   // checks if all ships are sunk
   allShipsSunk() {
     return this.ships.every(ship => ship.isSunk());
+  }
+
+  // update the information about last ship that is sunk
+  updateLastSunkShip(shipName, positions) {
+    this.lastSunkShipInfo.name = shipName;
+    this.lastSunkShipInfo.positions = positions;
+  }
+
+  // get the info about last ship that is sunk
+  getLastSunkShip() {
+    return this.lastSunkShipInfo;
   }
 };

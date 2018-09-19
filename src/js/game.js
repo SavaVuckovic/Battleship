@@ -27,44 +27,68 @@ export default function startGame(playerName) {
   computerBoard.setup();
 
   // initialize boards in the UI
-  initializeBoards(human, humanBoard, computer, computerBoard);
+  initializeBoards(human, humanBoard.slots, computer, computerBoard.slots);
   addSlotListeners(playTurn);
 }
 
+// plays a single turn in the game - human player click followed by computer turn
 function playTurn(humanMove) {
   const humanMoveResult = computerBoard.receiveAttack(humanMove);
-  if (humanMoveResult === 'hit') {
-    hitSlot('computer', humanMove);
-  } else if (humanMoveResult === 'miss') {
-    deactivateSlot('computer', humanMove);
-    // computers turn to play
-    computerTurn();
-  } else if (humanMoveResult === 'game over') {
-    showGameOver('Victory, you have destroyed all of enemy ships!', () => startGame(human.name));
-  } else {
-    // ship is sunk, its positions are returned inside humanMoveResult
-    showMessage('You have destroyed enemy ship');
-    sinkShip('computer', humanMoveResult);
+
+  switch (humanMoveResult) {
+    case 'hit':
+      hitSlot('computer', humanMove);
+      break;
+    case 'miss':
+      deactivateSlot('computer', humanMove);
+      // computers turn to play
+      computerTurn();
+      break;
+    case 'sunk':
+      if (playerWon('human')) {
+        showGameOver('Victory, you have destroyed all of enemy ships!', () => startGame(human.name));
+      }
+      const sunkShipInfo = computerBoard.getLastSunkShip();
+      showMessage(`You have destroyed an enemy ${sunkShipInfo.name}`);
+      sinkShip('computer', sunkShipInfo.positions);
+      break;
   }
 }
 
+// computers turn 
 function computerTurn() {
   setTimeout(() => {
     const computerMove = computer.attack()
     const computerMoveResult = humanBoard.receiveAttack(computerMove);
 
-    if (computerMoveResult === 'hit') {
-      hitSlot('human', computerMove);
-      computer.smartGuessMode(computerMove);
-      computerTurn();
-    } else if (computerMoveResult === 'miss') {
-      deactivateSlot('human', computerMove);
-    } else if (computerMoveResult === 'game over') {
-      showGameOver('Defeat, enemy has destroyed all of your ships!', () => startGame(human.name));
-    } else {
-      sinkShip('human', computerMoveResult);
-      showMessage('Enemy has destroyed your ship');
-      computer.stopSmartGuessing();
+    switch (computerMoveResult) {
+      case 'hit':
+        hitSlot('human', computerMove);
+        computer.smartGuessMode(computerMove);
+        // computer plays again as long as he keeps hitting
+        computerTurn();
+        break;
+      case 'miss':
+        deactivateSlot('human', computerMove);
+        break;
+      case 'sunk':
+        computer.stopSmartGuessing();
+        if (playerWon('computer')) {
+          showGameOver('Defeat, enemy has destroyed all of your ships!', () => startGame(human.name));
+        }
+        const sunkShipInfo = humanBoard.getLastSunkShip();
+        showMessage(`Enemy has destroyed your ${sunkShipInfo.name}`);
+        sinkShip('human', sunkShipInfo.positions);
+        break;
     }
   }, 300);
+}
+
+// check if player has won
+function playerWon(player) {
+  if (player === 'human') {
+    return computerBoard.allShipsSunk();
+  } else {
+    return humanBoard.allShipsSunk();
+  }
 }
