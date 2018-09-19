@@ -94,6 +94,16 @@ export function showGameOver(msg, callback) {
   });
 };
 
+// displays a message in the UI when a ship is sunk
+export function showMessage(msg) {
+  const message = document.querySelector('.msg');
+  message.innerText = msg;
+  message.style.visibility = 'visible';
+  setTimeout(() => {
+    message.style.visibility = 'hidden';
+  }, 2000);
+}
+
 // given a board player and coordinates, find a ship
 function findSlot(player, coordinates) {
   const board = document.querySelector(`#${player}-board`);

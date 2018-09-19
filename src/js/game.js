@@ -6,7 +6,8 @@ import {
   hitSlot,
   sinkShip,
   deactivateSlot,
-  showGameOver
+  showGameOver,
+  showMessage
  } from './ui';
 
 let human;
@@ -42,6 +43,7 @@ function playTurn(humanMove) {
     showGameOver('Victory, you have destroyed all of enemy ships!', () => startGame(human.name));
   } else {
     // ship is sunk, its positions are returned inside humanMoveResult
+    showMessage('You have destroyed enemy ship');
     sinkShip('computer', humanMoveResult);
   }
 }
@@ -61,6 +63,7 @@ function computerTurn() {
       showGameOver('Defeat, enemy has destroyed all of your ships!', () => startGame(human.name));
     } else {
       sinkShip('human', computerMoveResult);
+      showMessage('Enemy has destroyed your ship');
       computer.stopSmartGuessing();
     }
   }, 300);
