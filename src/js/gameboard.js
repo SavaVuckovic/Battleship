@@ -90,13 +90,9 @@ export default class Gameboard {
         return 'hit';
       }
     } else {
-      if (this.slots[coordinates] === 'empty') {
-        // ship doesn't exist at a given location
-        this.updateBoardSlot(coordinates, 'miss');
-        return 'miss';
-      } else {
-        return 'already played';
-      }
+      // ship doesn't exist at a given location
+      this.updateBoardSlot(coordinates, 'miss');
+      return 'miss';
     }
   }
 

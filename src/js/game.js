@@ -55,14 +55,13 @@ function computerTurn() {
       hitSlot('human', computerMove);
       computer.smartGuessMode(computerMove);
       computerTurn();
-    } else if (computerMoveResult === 'already played') {
-      computerTurn();
     } else if (computerMoveResult === 'miss') {
       deactivateSlot('human', computerMove);
     } else if (computerMoveResult === 'game over') {
       showGameOver('Defeat, enemy has destroyed all of your ships!', () => startGame(human.name));
     } else {
       sinkShip('human', computerMoveResult);
+      computer.stopSmartGuessing();
     }
   }, 300);
 }
