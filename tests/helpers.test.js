@@ -35,7 +35,7 @@ test('generatePossibleSlots() returns valid positions', () => {
 
 test('randomShipPositions() returns valid horizontal positions', () => {
   const mockMath = Object.create(global.Math);
-  mockMath.random = () => 0.3; // always horizontal
+  mockMath.random = () => 0.3;
   global.Math = mockMath;
 
   expect(randomShipPositions('A2', 3)).toEqual(expect.arrayContaining(['A2', 'A3', 'A4']));
@@ -44,7 +44,7 @@ test('randomShipPositions() returns valid horizontal positions', () => {
 
 test('randomShipPositions() returns valid vertical positions', () => {
   const mockMath = Object.create(global.Math);
-  mockMath.random = () => 0.7; // always vertical
+  mockMath.random = () => 0.7;
   global.Math = mockMath;
 
   expect(randomShipPositions('A2', 3)).toEqual(expect.arrayContaining(['A2', 'B2', 'C2']));

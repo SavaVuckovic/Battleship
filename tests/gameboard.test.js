@@ -36,7 +36,7 @@ describe('board handles attacks correctly', () => {
   board.setup();
   const testShip = new Ship('Destroyer', ['A1', 'A2']);
   const testShipTwo = new Ship('Submarine', ['B1', 'B2', 'B3']);
-  board.ships = [testShip, testShipTwo]; // overwrite board ships
+  board.ships = [testShip, testShipTwo]; 
 
   test('receiveAttack() returns a correct value', () => {
     expect(board.receiveAttack('A1')).toBe('hit');
