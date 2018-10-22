@@ -50,16 +50,16 @@ export function randomPosition() {
 
 // generates random ship positions, vertical or horizontal
 export function randomShipPositions(startPos, shipLength) {
-  const direction =  Math.random() > 0.5 ? 'vertical' : 'horizontal';
-  let positions;
-
-  if (direction === 'horizontal') {
-    positions = horizontalPositions(startPos, shipLength);
+  if (randomDirection() === 'horizontal') {
+    return horizontalPositions(startPos, shipLength);
   } else {
-    positions = verticalPositions(startPos, shipLength);
+    return verticalPositions(startPos, shipLength);
   }
+}
 
-  return positions;
+// returns either 'horizontal' or 'vertical'
+function randomDirection() {
+  return Math.random() > 0.5 ? 'vertical' : 'horizontal';
 }
 
 // generates horizontal positions
