@@ -7,6 +7,7 @@
   width: 100%;
   background-color: rgba(0,0,0,0.3);
   display: none;
+
   .modal-content {
     background: #fff;
     width: 40%;
@@ -14,27 +15,34 @@
     animation-name: modalopen;
     animation-duration: 0.7s;
     box-shadow: 0 2px 4px 0 $grey, 0 3px 12px 0;
+
     .modal-header {
       padding: 8px 12px;
       background: $grey-lighter;
+
       h2 {
         text-align: center;
         margin: 12px 0;
       }
     }
+
     .modal-body {
       padding: 10px;
       text-align: center;
+
       .message {
         margin: 10px 0 20px;
         font-size: 22px;
       }
+
       .buttons-wrapper {
         display: flex;
+
         .btn {
           flex: 1;
         }
       }
+
       #player-name-form {
         input {
           width: 95%;
@@ -46,6 +54,7 @@
       }
     }
   }
+  
   @keyframes modalopen{
     from { opacity: 0}
     to {opacity: 1}
