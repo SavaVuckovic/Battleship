@@ -14,6 +14,7 @@ export function randomPosition() {
   const abcd = 'ABCDEFGHIJ';
   const x = abcd[Math.floor(Math.random() * abcd.length)];
   const y = Math.floor(Math.random() * 10) + 1;
+  
   return `${x}${y}`;
 }
 

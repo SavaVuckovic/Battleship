@@ -10,10 +10,10 @@ export function selectPlayerName() {
   return new Promise(resolve => {
     form.addEventListener('submit', e => {
       e.preventDefault();
-      // extract player name value
+      // extract player name value and validate it
       const playerName = e.target.elements['player-name'].value;
-      // validate the name
       const msg = nameIsValid(playerName);
+
       if (msg === 'Valid') {
         // start the game only if name is valid
         resolve(playerName);
@@ -41,6 +41,7 @@ export function initializeBoards(human, humanSlots, computer, computerSlots) {
 // add slot click listeners
 export function addSlotListeners(callback) {
   const slots = document.querySelectorAll('#computer-board .slot');
+
   slots.forEach(slot => {
     slot.addEventListener('click', () => callback(slot.dataset.coordinates));
   });
@@ -49,6 +50,7 @@ export function addSlotListeners(callback) {
 // hit a slot in the UI
 export function hitSlot(player, coordinates) {
   const slot = findSlot(player, coordinates);
+
   if (slot.classList.contains('enemy')) {
     slot.classList.remove('enemy');
   }
@@ -58,6 +60,7 @@ export function hitSlot(player, coordinates) {
 // sink a ship in the UI
 export function sinkShip(player, positions) {
   const slots = positions.map(coord => findSlot(player, coord));
+
   slots.forEach(slot => {
     if (slot.classList.contains('enemy')) {
       slot.classList.remove('enemy');
@@ -71,6 +74,7 @@ export function deactivateSlot(player, coordinates) {
   const board = document.querySelector(`#${player}-board`);
   const slot = board.querySelector(`[data-coordinates='${coordinates}']`);
   const unactive = document.createElement('div');
+
   unactive.classList.add('unactive-slot');
   board.replaceChild(unactive, slot);
 }
@@ -95,6 +99,7 @@ export function showGameOver(msg, callback) {
 // displays a message in the UI when a ship is sunk
 export function showMessage(msg) {
   const message = document.querySelector('.msg');
+
   message.innerText = msg;
   message.style.visibility = 'visible';
   setTimeout(() => {
@@ -105,8 +110,8 @@ export function showMessage(msg) {
 // given a board player and coordinates, find a ship
 function findSlot(player, coordinates) {
   const board = document.querySelector(`#${player}-board`);
-  const slot = board.querySelector(`[data-coordinates='${coordinates}']`);
-  return slot;
+
+  return board.querySelector(`[data-coordinates='${coordinates}']`);
 }
 
 function toggleModal(modal) {
@@ -121,6 +126,7 @@ function generateBoard(player, slots) {
   // clone the board template
   const boardTemplate = document.querySelector('#board-template .board-wrapper');
   const newBoard = boardTemplate.cloneNode(true);
+  
   // fill it with proper information
   newBoard.querySelector('.player').innerText = player.name;
   // generate board slots
