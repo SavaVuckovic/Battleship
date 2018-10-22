@@ -1,0 +1,40 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  margin-top: 70px;
+  font-size: 48px;
+}
+
+.msg {
+  text-align: center;
+  visibility: hidden;
+}
+
+.template {
+  display: none;
+}
+
+.btn {
+  width: 200px;
+  margin: 12px 4px 0;
+  padding: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  background: $white;
+  border: 1.5px solid $black;
+  
+  &:hover {
+    background: $orange;
+    color: $black;
+  }
+}
