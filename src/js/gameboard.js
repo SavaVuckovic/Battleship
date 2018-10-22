@@ -13,6 +13,8 @@ export default class Gameboard {
   }
 
   setup() {
+    this.slots = {};
+    this.ships = [];
     this.generateSlots();
     this.placeShips();
   }
