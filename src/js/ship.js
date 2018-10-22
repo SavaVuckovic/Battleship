@@ -13,7 +13,6 @@ export default class Ship {
     this.positions[coordinates] = 'X';
   }
 
-  // check if all positions are hit
   isSunk() {
     return Object.values(this.positions).every(pos => pos === 'X');
   }

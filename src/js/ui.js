@@ -109,7 +109,6 @@ function findSlot(player, coordinates) {
   return slot;
 }
 
-// show/hide modal
 function toggleModal(modal) {
   if (modal.style.display !== 'block') {
     modal.style.display = 'block';
@@ -118,7 +117,6 @@ function toggleModal(modal) {
   }
 }
 
-// generates a single board
 function generateBoard(player, slots) {
   // clone the board template
   const boardTemplate = document.querySelector('#board-template .board-wrapper');
@@ -138,7 +136,6 @@ function generateBoard(player, slots) {
   return newBoard;
 }
 
-// populates a board with slot divs
 function populateBoardWithSlots(board, slots, human = true) {
   Object.keys(slots).forEach(slot => {
     const slotDiv = document.createElement('div');
@@ -155,7 +152,6 @@ function populateBoardWithSlots(board, slots, human = true) {
   });
 }
 
-// creates a space between boards in the UI
 function generateBoardSeparator() {
   const separator = document.createElement('div');
   separator.classList.add('board-separator');

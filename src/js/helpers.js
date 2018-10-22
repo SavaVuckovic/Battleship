@@ -57,7 +57,6 @@ export function randomShipPositions(startPos, shipLength) {
   }
 }
 
-// returns either 'horizontal' or 'vertical'
 function randomDirection() {
   return Math.random() > 0.5 ? 'vertical' : 'horizontal';
 }

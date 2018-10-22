@@ -84,7 +84,6 @@ function computerTurn() {
   }, 300);
 }
 
-// check if player has won
 function playerWon(player) {
   if (player === 'human') {
     return computerBoard.allShipsSunk();

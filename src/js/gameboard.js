@@ -12,13 +12,11 @@ export default class Gameboard {
     this.lastSunkShipInfo = {};
   }
 
-  // generates the slots and places ships
   setup() {
     this.generateSlots();
     this.placeShips();
   }
 
-  // generates board slot grid
   generateSlots() {
     'ABCDEFGHIJ'.split('').forEach(letter => {
       for (var i = 1; i <= 10; i++) {
@@ -68,7 +66,6 @@ export default class Gameboard {
     });
   }
 
-  // receive an attack from enemy
   receiveAttack(coordinates) {
     const ship = this.foundShip(coordinates);
     if (ship) {
@@ -105,12 +102,10 @@ export default class Gameboard {
     return found;
   }
 
-  // updates a value of a single board slot
   updateBoardSlot(coordinates, value) {
     this.slots[coordinates] = value;
   }
 
-  // checks if all ships are sunk
   allShipsSunk() {
     return this.ships.every(ship => ship.isSunk());
   }

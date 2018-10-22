@@ -26,7 +26,8 @@ export class ComputerPlayer extends Player {
     let stop = false;
     while(!stop) {
       const guess = this.smart ? this.smartGuess() : randomPosition();
-      if (this.alreadyPlayedSlots.indexOf(guess) === -1) {
+
+      if (!this.alreadyPlayedSlot(guess)) {
         this.alreadyPlayedSlots.push(guess);
         stop = true;
         return guess;
@@ -44,7 +45,10 @@ export class ComputerPlayer extends Player {
     }
   }
 
-  // flip the direction to attack
+  alreadyPlayedSlot(guess) {
+    return this.alreadyPlayedSlots.indexOf(guess) !== -1;
+  }
+
   flipDirection() {
     if (this.directionToAttack === 'vertical') {
       this.directionToAttack = 'horizontal';
